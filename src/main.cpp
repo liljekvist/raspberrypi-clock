@@ -1,11 +1,16 @@
-#include <raylib-cpp.hpp>
-#include <iostream>
-#include <chrono>
-#include <ctime>
-#include <string>
-#include <time.h> 
+#include "main.hpp"
+
 
 int main() {
+    std::vector<Event> Monday;
+    std::vector<Event> Tuesday;
+    std::vector<Event> Wednesday;
+    std::vector<Event> Thursday;
+    std::vector<Event> Friday;
+    std::string anubisStandUp = "Anubis standup";
+    bool days[7] = {true,true,true,true,true,false,false};
+    Monday.push_back(Event(anubisStandUp, 10, 10, 0, 5, days));
+
     int calculateTextPositionX(int fontWidth, int screenWidth);
     // Initialization
     int screenWidth = 1920;
@@ -56,6 +61,7 @@ int main() {
             ClearBackground(BLACK);
             DrawLine(1100,0,1101,1080,LIGHTGRAY);
             textColor.DrawText(buffer, 1130, 0, 200);
+            textColor.DrawText(anubisStandUp, 0, 0, 100);
         EndDrawing();
     }
 
