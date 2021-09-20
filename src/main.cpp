@@ -15,7 +15,8 @@ int main() {
     int screenWidth = 1920;
     int screenHeight = 1080;
 
-    raylib::Color textColor(LIGHTGRAY);
+    raylib::Color whiteColor(LIGHTGRAY);
+    raylib::Color blackColor(BLACK);
     raylib::Window w(screenWidth, screenHeight, "PogClock");
     
     SetTargetFPS(10);
@@ -47,20 +48,33 @@ int main() {
         time_t rawtime;
         struct tm * timeinfo;
         char buffer [80];
-        //if()
 
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        int fontWidth = MeasureText(buffer,200);
-        int fontHeight = 200;
         
         // Draw
         BeginDrawing();
+            //Clear background
+            blackColor.ClearBackground();
+
+            //Draw Boxes for events
+            whiteColor.DrawRectangleLines(0, 0, 1000, 250);
+            whiteColor.DrawRectangleLines(0, 250, 1000, 250);
+            whiteColor.DrawRectangleLines(0, 500, 1000, 250);
+            whiteColor.DrawRectangleLines(0, 750, 1000, 250);
+            //Draw events
+            //TBD
+
+            //Draw clock and borderline
+            whiteColor.DrawText(buffer, 1030, 0, 200);
+            whiteColor.DrawLine(1000,0,1001,1080);
+
+            //Draw FPS
             DrawFPS(10, 10);
-            ClearBackground(BLACK);
-            DrawLine(1000,0,1001,1080,LIGHTGRAY);
-            textColor.DrawText(buffer, 1030, 0, 200);
+
+            //Draw "Made by" text
+            whiteColor.DrawText("Made with <3 by liljekvist", 50, 1020, 40);
         EndDrawing();
     }
 

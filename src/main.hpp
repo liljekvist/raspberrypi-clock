@@ -9,6 +9,35 @@
 #include "defines.h"
 
 
+class time
+{
+public:
+    time(int _hour, int _minute);
+    ~time();
+    std::string getTimeStr();
+
+    int hour;
+    int minute;
+
+};
+
+time::time(int _hour, int _minute)
+:
+hour(_hour),
+minute(_minute)
+{
+}
+
+time::~time(){
+}
+
+std::string time::getTimeStr(){
+    return std::to_string(hour) + ":" + std::to_string(minute); // returns time in HH:MM
+}
+
+
+
+
 
 class Event
 {
