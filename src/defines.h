@@ -1,0 +1,1 @@
+#define anubisStandUpMessage "Anubis Standup"

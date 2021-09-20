@@ -7,9 +7,8 @@ int main() {
     std::vector<Event> Wednesday;
     std::vector<Event> Thursday;
     std::vector<Event> Friday;
-    std::string anubisStandUp = "Anubis standup";
     bool days[7] = {true,true,true,true,true,false,false};
-    Monday.push_back(Event(anubisStandUp, 10, 10, 0, 5, days));
+    Monday.push_back(Event(anubisStandUpMessage, 10, 10, 0, 5, days));
 
     int calculateTextPositionX(int fontWidth, int screenWidth);
     // Initialization
@@ -61,7 +60,6 @@ int main() {
             ClearBackground(BLACK);
             DrawLine(1100,0,1101,1080,LIGHTGRAY);
             textColor.DrawText(buffer, 1130, 0, 200);
-            textColor.DrawText(anubisStandUp, 0, 0, 100);
         EndDrawing();
     }
 
