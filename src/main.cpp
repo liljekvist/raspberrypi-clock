@@ -18,7 +18,7 @@ int main() {
     raylib::Color textColor(LIGHTGRAY);
     raylib::Window w(screenWidth, screenHeight, "PogClock");
     
-    SetTargetFPS(30);
+    SetTargetFPS(10);
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
@@ -57,6 +57,7 @@ int main() {
         
         // Draw
         BeginDrawing();
+            DrawFPS(10, 10);
             ClearBackground(BLACK);
             DrawLine(1000,0,1001,1080,LIGHTGRAY);
             textColor.DrawText(buffer, 1030, 0, 200);
