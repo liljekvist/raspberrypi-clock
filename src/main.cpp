@@ -58,8 +58,8 @@ int main() {
         // Draw
         BeginDrawing();
             ClearBackground(BLACK);
-            DrawLine(1100,0,1101,1080,LIGHTGRAY);
-            textColor.DrawText(buffer, 1130, 0, 200);
+            DrawLine(1000,0,1001,1080,LIGHTGRAY);
+            textColor.DrawText(buffer, 1030, 0, 200);
         EndDrawing();
     }
 
