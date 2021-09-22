@@ -48,7 +48,6 @@ int main() {
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
-        PlaySound(effect);
         if (IsCursorOnScreen()){
             DisableCursor();
             HideCursor();
@@ -62,13 +61,10 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        /* if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSound == false)){
+        if((((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) || ((*Ptr)[0].endHour == timeinfo->tm_hour) && ((*Ptr)[0].endMinute == timeinfo->tm_min) ) && ((*Ptr)[0].hasPlayedSound == false)){
             (*Ptr)[0].hasPlayedSound = true;
-                InitAudioDevice(); 
-                Sound effect = LoadSound("sound/siren.wav");
-                string currentDay;
-                CloseAudioDevice();
-        }*/
+                PlaySound(effect); 
+        }
 
         // Draw
         BeginDrawing();
