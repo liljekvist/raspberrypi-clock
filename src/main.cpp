@@ -1,14 +1,11 @@
 #include "main.hpp"
 
+int calculateTextPositionX(int fontWidth, int screenWidth);
+void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday);
+void LogCustom(int msgType, const char *text, va_list args);
+void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo);
 
 int main() {
-    //void eventDraw(std::vector<Event> input);
-
-    int calculateTextPositionX(int fontWidth, int screenWidth);
-    void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday);
-    void LogCustom(int msgType, const char *text, va_list args);
-    void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo);
-    Sound effect = LoadSound("sound/siren.wav");
     // Initialization
     int screenWidth = 1920;
     int screenHeight = 1080;
@@ -42,12 +39,18 @@ int main() {
                 currentDay = "Fredag";
                 break;
             }
-    
+        InitAudioDevice(); 
+        Sound effect = LoadSound("sound/siren.wav");
+        PlaySound(effect); 
+        CloseAudioDevice();      // Initialize audio device
+
+
     SetTargetFPS(0);
     constructDayVector(Ptr, wday);
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
+        //fxWav.Play();
         if (IsCursorOnScreen()){
             DisableCursor();
             HideCursor();
@@ -61,10 +64,13 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSound == false)){
+        /* if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSound == false)){
             (*Ptr)[0].hasPlayedSound = true;
-            PlaySound(effect);
-        }
+                InitAudioDevice(); 
+                Sound effect = LoadSound("sound/siren.wav");
+                string currentDay;
+                CloseAudioDevice();
+        }*/
 
         // Draw
         BeginDrawing();
