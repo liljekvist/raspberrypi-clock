@@ -26,51 +26,32 @@ int main() {
     deque<Event> day;
     switch(wday){
             case 1: 
-                currentDay = "Mon";
+                currentDay = "Måndag";
                 break;
             case 2: 
-                currentDay = "Tue";
+                currentDay = "Tisdag";
                 break;
             case 3: 
-                currentDay = "Wed";
+                currentDay = "Onsdag";
                 break;
             case 4: 
-                currentDay = "Thu";
+                currentDay = "Torsdag";
                 break;
             case 5: 
-                currentDay = "Fri";
+                currentDay = "Fredag";
                 break;
             }
     
     SetTargetFPS(0);
-    cout << "ConstructDatVector";
     day = constructDayVector(day, wday);
-
-    fprintf(stderr, "%i\n", wday);
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
-        // Update
-        if (IsKeyPressed(KEY_F11))
- 		{
-            // see what display we are on right now
- 			int display = GetCurrentMonitor();
- 
-            
-            if (IsWindowFullscreen())
-            {
-                // if we are full screen, then go back to the windowed size
-                SetWindowSize(screenWidth, screenHeight);
-            }
-            else
-            {
-                // if we are not full screen, set the window size to match the monitor we are on
-                SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
-            }
- 
-            // toggle the state
- 			ToggleFullscreen();
- 		}
+        if (!IsWindowFullscreen())
+        {
+             // if we are not in fullscreen set fullscreen
+            ToggleFullscreen();
+        }
 
         time (&rawtime);
         timeinfo = localtime (&rawtime);
@@ -81,21 +62,13 @@ int main() {
             //Clear background
             blackColor.ClearBackground();
 
-            //Draw Boxes for events
-            whiteColor.DrawRectangleLines(0, 0, 1000, 250);
-            whiteColor.DrawRectangleLines(0, 250, 1000, 250);
-            whiteColor.DrawRectangleLines(0, 500, 1000, 250);
-            whiteColor.DrawRectangleLines(0, 750, 1000, 250);
             //Draw events
             day = drawEventText(day,timeinfo);
             //Draw clock and borderline
             whiteColor.DrawText(buffer, 1030, 0, 200);
             whiteColor.DrawText(currentDay, 1030, 250, 100);
             whiteColor.DrawLine(1000,0,1001,1080);
-
-            //Draw FPS
-            //DrawFPS(10, 10);
-
+            
             //Draw "Made by" text
             whiteColor.DrawText("Made with <3 by liljekvist", 10, 20 + 1000, 40);
         EndDrawing();
@@ -151,6 +124,13 @@ deque<Event> constructDayVector(deque<Event> day, int weekday){
 
 deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     raylib::Color textColor(LIGHTGRAY);
+
+    textColor.DrawRectangleLines(0, 0, 1000, 250);
+    textColor.DrawRectangleLines(0, 250, 1000, 250);
+    textColor.DrawRectangleLines(0, 500, 1000, 250);
+    textColor.DrawRectangleLines(0, 750, 1000, 250);
+
+
     if(day[0].endHour <= timeinfo->tm_hour){
         //Hour is right
         if ((day[0].endMinute <= timeinfo->tm_min) && (day[0].endHour <= timeinfo->tm_hour) || day[0].endHour < timeinfo->tm_hour )
