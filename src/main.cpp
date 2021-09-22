@@ -41,8 +41,6 @@ int main() {
             }
         InitAudioDevice(); 
         Sound effect = LoadSound("sound/siren.wav");
-        PlaySound(effect); 
-        CloseAudioDevice();      // Initialize audio device
 
 
     SetTargetFPS(0);
@@ -50,7 +48,7 @@ int main() {
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
-        //fxWav.Play();
+        PlaySound(effect);
         if (IsCursorOnScreen()){
             DisableCursor();
             HideCursor();
@@ -88,7 +86,7 @@ int main() {
             whiteColor.DrawText("Made with <3 by liljekvist", 10, 20 + 1000, 40);
         EndDrawing();
     }
-
+    CloseAudioDevice();
     return 0;
 }
 
