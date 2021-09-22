@@ -1,3 +1,4 @@
+#pragma once
 #include <raylib-cpp.hpp>
 #include <iostream>
 #include <chrono>
@@ -6,45 +7,16 @@
 #include <time.h> 
 #include <vector>
 #include <memory>
+#include <bits/stdc++.h>
 #include "defines.h"
-
-
-class time
-{
-public:
-    time(int _hour, int _minute);
-    ~time();
-    std::string getTimeStr();
-
-    int hour;
-    int minute;
-
-};
-
-time::time(int _hour, int _minute)
-:
-hour(_hour),
-minute(_minute)
-{
-}
-
-time::~time(){
-}
-
-std::string time::getTimeStr(){
-    return std::to_string(hour) + ":" + std::to_string(minute); // returns time in HH:MM
-}
-
-
-
-
+using namespace std;
 
 class Event
 {
 public:
     //Defualt mobojumbo
     Event();
-    Event(std::string _title, int _startHour, int _endHour, int _startMinute, int _endMinute, bool _days[7]);
+    Event(std::string _title, int _startHour, int _endHour, int _startMinute, int _endMinute, string _displayTimeStart, string _displayTimeEnd);
     Event(Event &&) = default;
     Event(const Event &) = default;
     Event &operator=(Event &&) = default;
@@ -53,25 +25,27 @@ public:
     //Variables
 
     std::string title = "";
-    int startHour = 0;
-    int endHour = 0;
-    int startMinute = 0;
-    int endMinute = 0;
-    bool days[7] = {false, false, false, false, false, false, false}; //Days of occurence. Index 0 is monday.
+    string displayTimeStart = "";
+    string displayTimeEnd = "";
+    int startHour;
+    int startMinute;
+    int endHour;
+    int endMinute;
 };
 
-Event::Event(std::string _title, int _startHour, int _endHour, int _startMinute, int _endMinute, bool _days[7])
+
+
+Event::Event(std::string _title, int _startHour, int _endHour, int _startMinute, int _endMinute, string _displayTimeStart, string _displayTimeEnd)
 :
 title(_title),
 startHour(_startHour),
 endHour(_endHour),
 startMinute(_startMinute),
 endMinute(_endMinute),
-days{_days}
+displayTimeStart(_displayTimeStart),
+displayTimeEnd(_displayTimeEnd)
 {
 }
-
-
 Event::Event()
 {
 }

@@ -1,7 +1,8 @@
+#pragma once
 //Anubis 
 #define anubisStandUpMessage "anubis standup"
-#define anubisStandUpStartTime time::time asuStartTime(10, 0)
-#define anubisStandUpEncTime time::time asuEndTime(10, 5)
+#define anubisStandUpStartTime time::time* startTime = asuStartTime(10, 0)
+#define anubisStandUpEncTime time::time* asuEndTime(10, 5)
 
 #define anubisReview "anubis sprint review"
 
