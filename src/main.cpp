@@ -61,10 +61,16 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        if((((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) || ((*Ptr)[0].endHour == timeinfo->tm_hour) && ((*Ptr)[0].endMinute == timeinfo->tm_min) ) && ((*Ptr)[0].hasPlayedSound == false)){
-            (*Ptr)[0].hasPlayedSound = true;
+        if(((*Ptr)[0].endHour == timeinfo->tm_hour) && ((*Ptr)[0].endMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSoundEnd == false)){
+            (*Ptr)[0].hasPlayedSoundEnd = true;
                 PlaySound(effect); 
         }
+
+        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSoundStart == false)){
+            (*Ptr)[0].hasPlayedSoundStart = true;
+                PlaySound(effect); 
+        }
+
 
         // Draw
         BeginDrawing();

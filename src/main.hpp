@@ -28,7 +28,8 @@ public:
     int startMinute;
     int endHour;
     int endMinute;
-    bool hasPlayedSound = false;
+    bool hasPlayedSoundStart = false;
+    bool hasPlayedSoundEnd = false;
 };
 
 
