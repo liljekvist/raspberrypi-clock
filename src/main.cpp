@@ -5,16 +5,16 @@ int main() {
     //void eventDraw(std::vector<Event> input);
 
     int calculateTextPositionX(int fontWidth, int screenWidth);
-    deque<Event> constructDayVector(deque<Event> day, int weekday);
+    void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday);
     void LogCustom(int msgType, const char *text, va_list args);
-    deque<Event> drawEventText(deque<Event> day, tm* timeinfo);
+    void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo);
     Sound effect = LoadSound("sound/siren.wav");
     // Initialization
     int screenWidth = 1920;
     int screenHeight = 1080;
     SetTraceLogCallback(LogCustom);
+    shared_ptr<deque<Event>> Ptr(new deque<Event>);
     
-
     raylib::Color whiteColor(LIGHTGRAY);
     raylib::Color blackColor(BLACK);
     raylib::Window w(screenWidth, screenHeight, "PogClock");
@@ -25,7 +25,6 @@ int main() {
     timeinfo = localtime (&rawtime);
     int wday = timeinfo->tm_wday;
     string currentDay;
-    deque<Event> day;
     switch(wday){
             case 1: 
                 currentDay = "Måndag";
@@ -45,7 +44,7 @@ int main() {
             }
     
     SetTargetFPS(0);
-    day = constructDayVector(day, wday);
+    constructDayVector(Ptr, wday);
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
@@ -62,7 +61,7 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        if((day[0].startHour == timeinfo->tm_hour) && (day[0].startMinute == timeinfo->tm_min)){
+        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min)){
             PlaySound(effect);
         }
 
@@ -72,7 +71,7 @@ int main() {
             blackColor.ClearBackground();
 
             //Draw events
-            day = drawEventText(day,timeinfo);
+            drawEventText(Ptr,timeinfo);
             //Draw clock and borderline
             whiteColor.DrawText(buffer, 1030, 0, 200);
             whiteColor.DrawText(currentDay, 1030, 250, 100);
@@ -86,59 +85,58 @@ int main() {
     return 0;
 }
 
-deque<Event> constructDayVector(deque<Event> day, int weekday){
+void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday){
     if(weekday == 1){
-        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-        day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-        day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
+        dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        dayPtr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
+        dayPtr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
+        dayPtr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
+        dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        dayPtr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
 
     }
     else if (weekday == 2){
-        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-        day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-        day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
+        dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        dayPtr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
+        dayPtr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
+        dayPtr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
+        dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        dayPtr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 3){
-        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-        day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-        day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
+        dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        dayPtr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
+        dayPtr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
+        dayPtr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
+        dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        dayPtr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 4){
-        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-        day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-        day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
+        dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        dayPtr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
+        dayPtr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
+        dayPtr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
+        dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        dayPtr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 5){
-        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        day.push_back(Event("Amogus sprint review", 9, 10, 00, 00, "9:00", "10:00"));
-        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        day.push_back(Event("Anubis sprint review", 14, 15, 0, 0, "14:00", "15:00"));
-        day.push_back(Event("AJVP sprint review", 15, 16, 0, 0, "15:00", "16:00"));
+        dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        dayPtr->push_back(Event("Amogus sprint review", 9, 10, 00, 00, "9:00", "10:00"));
+        dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        dayPtr->push_back(Event("Anubis sprint review", 14, 15, 0, 0, "14:00", "15:00"));
+        dayPtr->push_back(Event("AJVP sprint review", 15, 16, 0, 0, "15:00", "16:00"));
     }
     else {
         cout << "ERROR: Day not valid or is a weekend!";
     }
-    return day;
 }
 
-deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
+void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo){
     raylib::Color textColor(LIGHTGRAY);
     
 
@@ -148,41 +146,39 @@ deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     textColor.DrawRectangleLines(0, 750, 1000, 250);
 
 
-    if(day[0].endHour <= timeinfo->tm_hour){
+    if(dayPtr->size() > 0 && (*dayPtr)[0].endHour <= timeinfo->tm_hour){
         //Hour is right
-        if ((day[0].endMinute <= timeinfo->tm_min) && (day[0].endHour <= timeinfo->tm_hour) || day[0].endHour < timeinfo->tm_hour )
+        if (((*dayPtr)[0].endMinute <= timeinfo->tm_min) && ((*dayPtr)[0].endHour <= timeinfo->tm_hour) || (*dayPtr)[0].endHour < timeinfo->tm_hour )
         {
-            cout << "Removed Event " <<  day[0].title << endl;
-            day.pop_front();
+            cout << "Removed Event " <<  (*dayPtr)[0].title << endl;
+            (*dayPtr).pop_front();
         }
     }
 
     string timesStr;
-    if(day.size() > 0){
-        timesStr = day[0].displayTimeStart + " - " + day[0].displayTimeEnd;
-        textColor.DrawText(day[0].title, 10 , 10, 70);
+    if((*dayPtr).size() > 0){
+        timesStr = (*dayPtr)[0].displayTimeStart + " - " + (*dayPtr)[0].displayTimeEnd;
+        textColor.DrawText((*dayPtr)[0].title, 10 , 10, 70);
         textColor.DrawText(timesStr, 10, 100, 40);
     }
 
-    if(day.size() > 1){   
-        timesStr = day[1].displayTimeStart + " - " + day[1].displayTimeEnd;
-        textColor.DrawText(day[1].title, 10, (10 + 250), 70);
+    if((*dayPtr).size() > 1){   
+        timesStr = (*dayPtr)[1].displayTimeStart + " - " + (*dayPtr)[1].displayTimeEnd;
+        textColor.DrawText((*dayPtr)[1].title, 10, (10 + 250), 70);
         textColor.DrawText(timesStr, 10, (100 + 250), 40);
     }
 
-    if(day.size() > 2){
-        timesStr = day[2].displayTimeStart + " - " + day[2].displayTimeEnd;
-        textColor.DrawText(day[2].title, 10, (10 + 500), 70);
+    if((*dayPtr).size() > 2){
+        timesStr = (*dayPtr)[2].displayTimeStart + " - " + (*dayPtr)[2].displayTimeEnd;
+        textColor.DrawText((*dayPtr)[2].title, 10, (10 + 500), 70);
         textColor.DrawText(timesStr, 10, (100 + 500), 40);
     }
 
-    if(day.size() > 3){
-        timesStr = day[3].displayTimeStart + " - " + day[3].displayTimeEnd;
-        textColor.DrawText(day[3].title, 10, (10 + 750), 70);
+    if((*dayPtr).size() > 3){
+        timesStr = (*dayPtr)[3].displayTimeStart + " - " + (*dayPtr)[3].displayTimeEnd;
+        textColor.DrawText((*dayPtr)[3].title, 10, (10 + 750), 70);
         textColor.DrawText(timesStr, 10, (100 + 750), 40);
     }
-
-    return day;
 }
 
 // Custom logging funtion

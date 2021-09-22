@@ -5,6 +5,7 @@
 #include <string>
 #include <time.h> 
 #include <bits/stdc++.h>
+#include <memory>
 using namespace std;
 
 class Event
