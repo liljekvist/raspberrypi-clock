@@ -65,6 +65,7 @@ int main() {
         if((day[0].startHour == timeinfo->tm_hour) && (day[0].startMinute == timeinfo->tm_min)){
             PlaySound(effect);
         }
+
         // Draw
         BeginDrawing();
             //Clear background
@@ -87,45 +88,52 @@ int main() {
 
 deque<Event> constructDayVector(deque<Event> day, int weekday){
     if(weekday == 1){
-        day.push_back(Event("Dag Börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
         day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
         day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
         day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
         day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("Dag Slut", 16, 16, 00, 00, "16:00", "16:00"));
+        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
 
     }
     else if (weekday == 2){
-        day.push_back(Event("Dag Börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
         day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
         day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
         day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
         day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("Dag Slut", 16, 16, 00, 00, "16:00", "16:00"));
-
+        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 3){
-        day.push_back(Event("Dag Börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
         day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
         day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
         day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
         day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("Dag Slut", 16, 16, 00, 00, "16:00", "16:00"));
+        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 4){
-        day.push_back(Event("Dag Börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
         day.push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
         day.push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
         day.push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
         day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-        day.push_back(Event("Dag Slut", 16, 16, 00, 00, "16:00", "16:00"));
-
+        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        day.push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else if (weekday == 5){
-        //TBD
+        day.push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
+        day.push_back(Event("Amogus sprint review", 9, 10, 00, 00, "9:00", "10:00"));
+        day.push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+        day.push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
+        day.push_back(Event("Anubis sprint review", 14, 15, 0, 0, "14:00", "15:00"));
+        day.push_back(Event("AJVP sprint review", 15, 16, 0, 0, "15:00", "16:00"));
     }
     else {
-        cout << "ERROR: Day not valid!";
+        cout << "ERROR: Day not valid or is a weekend!";
     }
     return day;
 }
@@ -165,13 +173,13 @@ deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     if(day.size() > 2){
         timesStr = day[2].displayTimeStart + " - " + day[2].displayTimeEnd;
         textColor.DrawText(day[2].title, 10, (10 + 500), 70);
-        textColor.DrawText(timesStr, 10, (100 + 250), 40);
+        textColor.DrawText(timesStr, 10, (100 + 500), 40);
     }
 
     if(day.size() > 3){
         timesStr = day[3].displayTimeStart + " - " + day[3].displayTimeEnd;
         textColor.DrawText(day[3].title, 10, (10 + 750), 70);
-        textColor.DrawText(timesStr, 10, (100 + 250), 40);
+        textColor.DrawText(timesStr, 10, (100 + 750), 40);
     }
 
     return day;
