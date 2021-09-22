@@ -8,6 +8,7 @@ int main() {
     deque<Event> constructDayVector(deque<Event> day, int weekday);
     void LogCustom(int msgType, const char *text, va_list args);
     deque<Event> drawEventText(deque<Event> day, tm* timeinfo);
+    Sound effect = LoadSound("sound/siren.wav");
     // Initialization
     int screenWidth = 1920;
     int screenHeight = 1080;
@@ -61,7 +62,9 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        
+        if((day[0].startHour == timeinfo->tm_hour) && (day[0].startMinute == timeinfo->tm_min)){
+            PlaySound(effect);
+        }
         // Draw
         BeginDrawing();
             //Clear background
@@ -129,7 +132,6 @@ deque<Event> constructDayVector(deque<Event> day, int weekday){
 
 deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     raylib::Color textColor(LIGHTGRAY);
-    Sound effect = LoadSound("sound/siren.wav");
     
 
     textColor.DrawRectangleLines(0, 0, 1000, 250);
@@ -137,9 +139,6 @@ deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     textColor.DrawRectangleLines(0, 500, 1000, 250);
     textColor.DrawRectangleLines(0, 750, 1000, 250);
 
-    if((day[0].startHour == timeinfo->tm_hour) && (day[0].startMinute == timeinfo->tm_min)){
-        PlaySound(effect);
-    }
 
     if(day[0].endHour <= timeinfo->tm_hour){
         //Hour is right
