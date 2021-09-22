@@ -12,6 +12,7 @@ int main() {
     int screenWidth = 1920;
     int screenHeight = 1080;
     SetTraceLogCallback(LogCustom);
+    
 
     raylib::Color whiteColor(LIGHTGRAY);
     raylib::Color blackColor(BLACK);
@@ -47,6 +48,10 @@ int main() {
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
+        if (IsCursorOnScreen()){
+            DisableCursor();
+            HideCursor();
+        }
         if (!IsWindowFullscreen())
         {
              // if we are not in fullscreen set fullscreen
