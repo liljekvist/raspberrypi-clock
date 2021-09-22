@@ -129,7 +129,7 @@ deque<Event> constructDayVector(deque<Event> day, int weekday){
 
 deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     raylib::Color textColor(LIGHTGRAY);
-    raylib::Sound siren("sound/siren.wav");
+    Sound effect = LoadSound("sound/siren.wav");
     
 
     textColor.DrawRectangleLines(0, 0, 1000, 250);
@@ -138,7 +138,7 @@ deque<Event> drawEventText(deque<Event> day, tm* timeinfo){
     textColor.DrawRectangleLines(0, 750, 1000, 250);
 
     if((day[0].startHour == timeinfo->tm_hour) && (day[0].startMinute == timeinfo->tm_min)){
-        siren.Play();
+        PlaySound(effect);
     }
 
     if(day[0].endHour <= timeinfo->tm_hour){
