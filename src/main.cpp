@@ -61,7 +61,8 @@ int main() {
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min)){
+        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSound == false)){
+            (*Ptr)[0].hasPlayedSound = true;
             PlaySound(effect);
         }
 
