@@ -4,13 +4,14 @@ int calculateTextPositionX(int fontWidth, int screenWidth);
 void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday);
 void LogCustom(int msgType, const char *text, va_list args);
 void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo);
+void soundLogic(shared_ptr<Sound> soundEffect, shared_ptr<deque<Event>> dayPtr, tm * timeinfo);
 
 int main() {
     // Initialization
     int screenWidth = 1920;
     int screenHeight = 1080;
     SetTraceLogCallback(LogCustom);
-    shared_ptr<deque<Event>> Ptr(new deque<Event>);
+    shared_ptr<deque<Event>> Ptr = make_shared<deque<Event>>();
     
     raylib::Color whiteColor(LIGHTGRAY);
     raylib::Color blackColor(BLACK);
@@ -40,7 +41,8 @@ int main() {
                 break;
             }
         InitAudioDevice(); 
-        Sound effect = LoadSound("sound/siren.wav");
+        shared_ptr<Sound> effectPtr = make_shared<Sound>();
+        (*effectPtr) = LoadSound("sound/siren.wav");
 
 
     SetTargetFPS(0);
@@ -58,19 +60,11 @@ int main() {
             ToggleFullscreen();
         }
 
+        soundLogic(effectPtr, Ptr, timeinfo);
+
         time (&rawtime);
         timeinfo = localtime (&rawtime);
         strftime (buffer,80,"%T",timeinfo);
-        if(((*Ptr)[0].endHour == timeinfo->tm_hour) && ((*Ptr)[0].endMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSoundEnd == false)){
-            (*Ptr)[0].hasPlayedSoundEnd = true;
-                PlaySound(effect); 
-        }
-
-        if(((*Ptr)[0].startHour == timeinfo->tm_hour) && ((*Ptr)[0].startMinute == timeinfo->tm_min) && ((*Ptr)[0].hasPlayedSoundStart == false)){
-            (*Ptr)[0].hasPlayedSoundStart = true;
-                PlaySound(effect); 
-        }
-
 
         // Draw
         BeginDrawing();
@@ -186,6 +180,19 @@ void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo){
         textColor.DrawText((*dayPtr)[3].title, 10, (10 + 750), 70);
         textColor.DrawText(timesStr, 10, (100 + 750), 40);
     }
+}
+
+void soundLogic(shared_ptr<Sound> soundEffect, shared_ptr<deque<Event>> dayPtr, tm * timeinfo){
+        if(((*dayPtr)[0].endHour == timeinfo->tm_hour) && ((*dayPtr)[0].endMinute == timeinfo->tm_min) && ((*dayPtr)[0].hasPlayedSoundEnd == false)){
+            (*dayPtr)[0].hasPlayedSoundEnd = true;
+                PlaySound((*soundEffect)); 
+        }
+
+        if(((*dayPtr)[0].startHour == timeinfo->tm_hour) && ((*dayPtr)[0].startMinute == timeinfo->tm_min) && ((*dayPtr)[0].hasPlayedSoundStart == false)){
+            (*dayPtr)[0].hasPlayedSoundStart = true;
+                PlaySound((*soundEffect)); 
+        }
+
 }
 
 // Custom logging funtion
