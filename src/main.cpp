@@ -126,11 +126,10 @@ void constructDayVector(shared_ptr<deque<Event>> dayPtr, int weekday){
     }
     else if (weekday == 5){
         dayPtr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-        dayPtr->push_back(Event("Amogus sprint review", 9, 10, 00, 00, "9:00", "10:00"));
+        dayPtr->push_back(Event("Alla grupper ska ha Review", 9, 10, 00, 00, "9:00", "10:00"));
         dayPtr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
         dayPtr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-        dayPtr->push_back(Event("Anubis sprint review", 14, 15, 0, 0, "14:00", "15:00"));
-        dayPtr->push_back(Event("AJVP sprint review", 15, 16, 0, 0, "15:00", "16:00"));
+        dayPtr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
     }
     else {
         cout << "ERROR: Day not valid or is a weekend!";
