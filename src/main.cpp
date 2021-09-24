@@ -155,30 +155,16 @@ void drawEventText(shared_ptr<deque<Event>> dayPtr, tm* timeinfo){
         }
     }
 
-    string timesStr;
-    if((*dayPtr).size() > 0){
-        timesStr = (*dayPtr)[0].displayTimeStart + " - " + (*dayPtr)[0].displayTimeEnd;
-        textColor.DrawText((*dayPtr)[0].title, 10 , 10, 70);
-        textColor.DrawText(timesStr, 10, 100, 40);
+    int index = (*dayPtr).size() - 1;
+
+    for(int i = 0; i < index && i <= 3; i++){
+    auto_ptr<Event> currentDay(new Event);
+    (*currentDay) = (*dayPtr)[i];
+    string timesStr = (*currentDay).displayTimeStart + " - " + (*currentDay).displayTimeEnd;
+    textColor.DrawText((*currentDay).title, 10 , 10 + (250*i), 70);
+    textColor.DrawText(timesStr, 10, 100 + (250*i), 40);
     }
 
-    if((*dayPtr).size() > 1){   
-        timesStr = (*dayPtr)[1].displayTimeStart + " - " + (*dayPtr)[1].displayTimeEnd;
-        textColor.DrawText((*dayPtr)[1].title, 10, (10 + 250), 70);
-        textColor.DrawText(timesStr, 10, (100 + 250), 40);
-    }
-
-    if((*dayPtr).size() > 2){
-        timesStr = (*dayPtr)[2].displayTimeStart + " - " + (*dayPtr)[2].displayTimeEnd;
-        textColor.DrawText((*dayPtr)[2].title, 10, (10 + 500), 70);
-        textColor.DrawText(timesStr, 10, (100 + 500), 40);
-    }
-
-    if((*dayPtr).size() > 3){
-        timesStr = (*dayPtr)[3].displayTimeStart + " - " + (*dayPtr)[3].displayTimeEnd;
-        textColor.DrawText((*dayPtr)[3].title, 10, (10 + 750), 70);
-        textColor.DrawText(timesStr, 10, (100 + 750), 40);
-    }
 }
 
 void soundLogic(shared_ptr<Sound> soundEffect, shared_ptr<deque<Event>> dayPtr, tm * timeinfo){
