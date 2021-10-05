@@ -18,7 +18,7 @@ int main() {
     
     string currentDay = mainObject.getCurrentDayString();
 
-    InitAudioDevice(); 
+    //InitAudioDevice(); 
     (*mainObject.effectPtr) = LoadSound("sound/siren.wav");
 
     mainObject.constructDayVector();

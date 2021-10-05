@@ -116,8 +116,14 @@ public:
         string timesStr;
         if((*Ptr).size() > 0){
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
-            textColor.DrawText((*Ptr)[0].title, 10 , 10, 70);
-            textColor.DrawText(timesStr, 10, 100, 40);
+            if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
+                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 70);
+                textColorRed.DrawText(timesStr, 10, 100, 40);
+            }
+            else {
+                textColor.DrawText((*Ptr)[0].title, 10 , 10, 70);
+                textColor.DrawText(timesStr, 10, 100, 40);
+            }
         }
 
         if((*Ptr).size() > 1){   
@@ -143,6 +149,7 @@ public:
     shared_ptr<deque<Event>> Ptr = make_shared<deque<Event>>();
     shared_ptr<Sound> effectPtr = make_shared<Sound>();
     raylib::Color textColor = raylib::Color(LIGHTGRAY);
+    raylib::Color textColorRed = raylib::Color(RED);
     time_t rawtime;
     struct tm * timeinfo;
     char buffer [80];
