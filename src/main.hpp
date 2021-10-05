@@ -4,7 +4,7 @@
 #include <ctime>
 #include <string>
 #include <time.h> 
-#include <bits/stdc++.h>
+#include <deque>
 #include <memory>
 #include "event.h"
 using namespace std;
