@@ -1,18 +1,24 @@
 #pragma once
 #include <raylib-cpp.hpp>
+#include <unistd.h>
 #include <iostream>
 #include <ctime>
 #include <string>
 #include <time.h> 
 #include <deque>
 #include <memory>
+#include <curl/curl.h>
+#include <json/json.h>
+
 #include "event.h"
 using namespace std;
+
 
 class main
 {   
 public:
     //Functions
+    
     string getCurrentDayString(){ // Returns the day represented as a string.
         int wday = getCurrentDayInt();
         string currentDay;
@@ -35,7 +41,6 @@ public:
                 }
         return currentDay;
     }
-
     // Returns the day represented as a int. Range 0 to 6 where 0 is sunday and 6 is saturday.
     int getCurrentDayInt(){
         time (&rawtime);
@@ -146,6 +151,7 @@ public:
     }
 
     //Variables
+    string urlToImage = "";
     shared_ptr<deque<Event>> Ptr = make_shared<deque<Event>>();
     shared_ptr<Sound> effectPtr = make_shared<Sound>();
     raylib::Color textColor = raylib::Color(LIGHTGRAY);

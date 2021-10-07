@@ -34,7 +34,7 @@ else
 		# Set Linux macros
 		platform := Linux
 		CXX ?= g++
-		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11
+		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11 -l curl -l jsoncpp
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
@@ -71,10 +71,12 @@ include: submodules
 	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raylib.h)
 	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raymath.h)
 	$(call COPY,vendor/raylib-cpp/include,./include,*.hpp)
+	$(call COPY,/usr/include/json,./include,*.h)
+	$(call COPY,/usr/include/curl,./include,*.h)
 
 # Build the raylib static library file and copy it into lib
 lib: submodules
-	cd vendor/raylib-cpp/vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
+	yes | cp -rf customRaylibConfig/config.h vendor/raylib-cpp/vendor/raylib/src/config.h && cd vendor/raylib-cpp/vendor/raylib/src $(THEN) "$(MAKE)" PLATFORM=PLATFORM_DESKTOP
 	$(MKDIR) $(call platformpth, lib/$(platform))
 	$(call COPY,vendor/raylib-cpp/vendor/raylib/$(libGenDir),lib/$(platform),libraylib.a)
 
@@ -97,3 +99,4 @@ execute:
 # Clean up all relevant files
 clean:
 	$(RM) $(call platformpth, $(buildDir)/*)
+	$(RM) $(call platformpth, $(buildDir))
