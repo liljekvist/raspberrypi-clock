@@ -34,12 +34,14 @@ else
 		# Set Linux macros
 		platform := Linux
 		CXX ?= g++
+		includeDirectory := /usr/include
 		linkFlags += -l GL -l m -l pthread -l dl -l rt -l X11 -l curl -l jsoncpp
 	endif
 	ifeq ($(UNAMEOS), Darwin)
 		# Set macOS macros
 		platform := macOS
 		CXX ?= clang++
+		includeDirectory := /usr/local/include
 		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 		libGenDir := src
 	endif
@@ -71,8 +73,8 @@ include: submodules
 	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raylib.h)
 	$(call COPY,vendor/raylib-cpp/vendor/raylib/src,./include,raymath.h)
 	$(call COPY,vendor/raylib-cpp/include,./include,*.hpp)
-	$(call COPY,/usr/include/json,./include,*.h)
-	$(call COPY,/usr/include/curl,./include,*.h)
+	$(call COPY,$(includeDirectory)/json,./include,*.h)
+	$(call COPY,$(includeDirectory)/curl,./include,*.h)
 
 # Build the raylib static library file and copy it into lib
 lib: submodules
