@@ -156,7 +156,7 @@ std::string getImageFromUrl(std::string url){
         CURL* curl = curl_easy_init();
         FILE *fp;
         CURLcode res;
-        std::string filename = "meme." + url.substr(url.length() - 3);
+        std::string filename = "meme." + url[url.length() - 2] + url[url.length() - 1] + url[url.length()];
         char outfilename[filename.length() + 1];
         strcpy(outfilename, filename.c_str());
         fp = fopen(outfilename,"wb");
