@@ -42,7 +42,7 @@ else
 		platform := macOS
 		CXX ?= clang++
 		includeDirectory := /usr/local/include
-		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
+		linkFlags += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL -framework -l curl -l jsoncpp
 		libGenDir := src
 	endif
 
