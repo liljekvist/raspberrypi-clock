@@ -91,7 +91,7 @@ public:
         else if (weekday == 5){
             Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
             Ptr->push_back(Event("Alla grupper ska ha Review", 9, 10, 00, 00, "9:00", "10:00"));
-            Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
+            Ptr->push_back(Event("Lunch på resturang", 12, 13, 00, 00, "12:00", "13:00"));
             Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
             Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
         }
