@@ -61,7 +61,7 @@ int main() {
             ToggleFullscreen();
         }
 
-        //soundLogic(mainObject.effectPtr, mainObject.Ptr, mainObject.timeinfo);
+        soundLogic(mainObject.effectPtr, mainObject.Ptr, mainObject.timeinfo);
 
         time (&mainObject.rawtime);
         mainObject.timeinfo = localtime (&mainObject.rawtime);
