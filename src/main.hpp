@@ -18,6 +18,32 @@ class main
 {   
 public:
     //Functions
+
+    void ResizeImage(raylib::Texture* imagePtr, int maxWidth, int maxHeight){
+        int ratio = 0;
+        int orgWidth = (*imagePtr).GetWidth();
+        int orgHeight = (*imagePtr).GetHeight();
+        if(orgWidth > maxWidth){
+            std::cout << "Scaling Width";
+            ratio = maxWidth / orgWidth;
+            (*imagePtr).SetHeight(orgHeight * ratio);
+            (*imagePtr).SetWidth(maxWidth);
+            orgHeight = orgHeight * ratio;
+            orgWidth = orgWidth * ratio;
+        }
+
+        if(orgHeight > maxHeight){
+            std::cout << "Scaling Height";
+            ratio = maxHeight / orgHeight;
+            (*imagePtr).SetHeight(maxHeight);
+            (*imagePtr).SetWidth((int)orgWidth * ratio);
+            orgHeight = orgHeight * ratio;
+            orgWidth = orgWidth * ratio;
+        }
+
+        std::cout << "Heigth: " << (*imagePtr).height << std::endl;
+        std::cout << "Width: " << (*imagePtr).width << std::endl;
+    }
     
     string getCurrentDayString(){ // Returns the day represented as a string.
         int wday = getCurrentDayInt();
@@ -51,46 +77,19 @@ public:
 
     void constructDayVector(){
         int weekday = getCurrentDayInt();
-        if(weekday == 1){
+        if(weekday < 5 && weekday > 0){
             Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-            Ptr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-            Ptr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-            Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-            Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-            Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
-
-        }
-        else if (weekday == 2){
-            Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-            Ptr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-            Ptr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-            Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-            Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-            Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
-        }
-        else if (weekday == 3){
-            Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-            Ptr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-            Ptr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
-            Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
-            Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
-            Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
-        }
-        else if (weekday == 4){
-            Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Standup Amogus", 9, 10, 55, 00, "9:55", "10:00"));
-            Ptr->push_back(Event("Standup Anubis", 10, 10, 0, 5, "10:00", "10:05"));
-            Ptr->push_back(Event("Standup AJVP", 10, 10, 5, 10, "10:05", "10:10"));
+            Ptr->push_back(Event("Standup Christoffer och Mikael", 9, 9, 40, 45, "9:40", "9:45"));
+            Ptr->push_back(Event("Standup Sebastian och Albin2", 9, 9, 45, 50, "9:45", "9:50"));
+            Ptr->push_back(Event("Standup Jonatan och Razan", 9, 9, 50, 55, "9:50", "9:55"));
+            Ptr->push_back(Event("Standup Viktor och Pontus", 9, 10, 55, 00, "9:55", "10:00"));
+            Ptr->push_back(Event("Standup Albin3 och Joel", 10, 10, 00, 05, "10:00", "10:05"));
             Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
             Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
             Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
         }
         else if (weekday == 5){
             Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Alla grupper ska ha Review", 9, 10, 00, 00, "9:00", "10:00"));
             Ptr->push_back(Event("Lunch på resturang", 12, 13, 00, 00, "12:00", "13:00"));
             Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
             Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
@@ -122,7 +121,7 @@ public:
         if((*Ptr).size() > 0){
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
             if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
-                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 70);
+                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 60);
                 textColorRed.DrawText(timesStr, 10, 100, 40);
             }
             else {
@@ -133,19 +132,19 @@ public:
 
         if((*Ptr).size() > 1){   
             timesStr = (*Ptr)[1].displayTimeStart + " - " + (*Ptr)[1].displayTimeEnd;
-            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 70);
+            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 60);
             textColor.DrawText(timesStr, 10, (100 + 250), 40);
         }
 
         if((*Ptr).size() > 2){
             timesStr = (*Ptr)[2].displayTimeStart + " - " + (*Ptr)[2].displayTimeEnd;
-            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 70);
+            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 60);
             textColor.DrawText(timesStr, 10, (100 + 500), 40);
         }
 
         if((*Ptr).size() > 3){
             timesStr = (*Ptr)[3].displayTimeStart + " - " + (*Ptr)[3].displayTimeEnd;
-            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 70);
+            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 60);
             textColor.DrawText(timesStr, 10, (100 + 750), 40);
         }
     }

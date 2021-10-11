@@ -39,15 +39,12 @@ int main() {
     
     string currentDay = mainObject.getCurrentDayString();
     
-    InitAudioDevice(); 
+    //InitAudioDevice(); 
     (*mainObject.effectPtr) = LoadSound("sound/siren.wav");
     mainObject.constructDayVector();
     auto filename = getImageFromUrl(getImageUrlFromReddit());
     raylib::Texture texture(filename);
-    int orgHeight = texture.height;
-    int orgWidth = texture.width;
-    texture.SetWidth(700 * orgWidth / orgHeight);
-    texture.SetHeight(700 * orgHeight / orgWidth);
+    mainObject.ResizeImage(&texture, 500, 500);
 
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
