@@ -20,13 +20,16 @@ public:
     //Functions
 
     void ResizeImage(raylib::Texture* imagePtr, int maxWidth, int maxHeight){
-        int ratio = 0;
+        float ratio = 0.0f;
         int orgWidth = (*imagePtr).GetWidth();
         int orgHeight = (*imagePtr).GetHeight();
+        cout << "OrgW: " << orgWidth << endl << "OrgH: " << orgHeight << endl;
+
         if(orgWidth > maxWidth){
-            std::cout << "Scaling Width";
-            ratio = maxWidth / orgWidth;
-            (*imagePtr).SetHeight(orgHeight * ratio);
+            ratio = (float)maxWidth / (float)orgWidth;
+
+            std::cout << "Scaling Width" << endl << "ratio: " << ratio;
+            (*imagePtr).SetHeight((int)orgHeight * ratio);
             (*imagePtr).SetWidth(maxWidth);
             orgHeight = orgHeight * ratio;
             orgWidth = orgWidth * ratio;
@@ -34,7 +37,7 @@ public:
 
         if(orgHeight > maxHeight){
             std::cout << "Scaling Height";
-            ratio = maxHeight / orgHeight;
+            ratio = (float)maxHeight / (float)orgHeight;
             (*imagePtr).SetHeight(maxHeight);
             (*imagePtr).SetWidth((int)orgWidth * ratio);
             orgHeight = orgHeight * ratio;
@@ -121,30 +124,30 @@ public:
         if((*Ptr).size() > 0){
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
             if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
-                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 60);
+                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 50);
                 textColorRed.DrawText(timesStr, 10, 100, 40);
             }
             else {
-                textColor.DrawText((*Ptr)[0].title, 10 , 10, 70);
+                textColor.DrawText((*Ptr)[0].title, 10 , 10, 50);
                 textColor.DrawText(timesStr, 10, 100, 40);
             }
         }
 
         if((*Ptr).size() > 1){   
             timesStr = (*Ptr)[1].displayTimeStart + " - " + (*Ptr)[1].displayTimeEnd;
-            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 60);
+            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 50);
             textColor.DrawText(timesStr, 10, (100 + 250), 40);
         }
 
         if((*Ptr).size() > 2){
             timesStr = (*Ptr)[2].displayTimeStart + " - " + (*Ptr)[2].displayTimeEnd;
-            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 60);
+            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 50);
             textColor.DrawText(timesStr, 10, (100 + 500), 40);
         }
 
         if((*Ptr).size() > 3){
             timesStr = (*Ptr)[3].displayTimeStart + " - " + (*Ptr)[3].displayTimeEnd;
-            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 60);
+            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 50);
             textColor.DrawText(timesStr, 10, (100 + 750), 40);
         }
     }
