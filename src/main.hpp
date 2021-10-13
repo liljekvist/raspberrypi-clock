@@ -7,6 +7,7 @@
 #include <time.h> 
 #include <deque>
 #include <memory>
+#include <fstream>
 #include <curl/curl.h>
 #include <json/json.h>
 
@@ -105,10 +106,10 @@ public:
     void drawEventText(){
         
 
-        textColor.DrawRectangleLines(0, 0, 1000, 250);
-        textColor.DrawRectangleLines(0, 250, 1000, 250);
-        textColor.DrawRectangleLines(0, 500, 1000, 250);
-        textColor.DrawRectangleLines(0, 750, 1000, 250);
+        textColor.DrawRectangleLines(0, 0, 1300, 250);
+        textColor.DrawRectangleLines(0, 250, 1300, 250);
+        textColor.DrawRectangleLines(0, 500, 1300, 250);
+        textColor.DrawRectangleLines(0, 750, 1300, 250);
 
 
         if(Ptr->size() > 0 && (*Ptr)[0].endHour <= timeinfo->tm_hour){
@@ -125,31 +126,36 @@ public:
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
             if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
                 textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 50);
-                textColorRed.DrawText(timesStr, 10, 100, 40);
+                textColorRed.DrawText(timesStr, 10, 200, 40);
             }
             else {
                 textColor.DrawText((*Ptr)[0].title, 10 , 10, 50);
-                textColor.DrawText(timesStr, 10, 100, 40);
+                textColor.DrawText(timesStr, 10, 200, 40);
             }
         }
 
         if((*Ptr).size() > 1){   
             timesStr = (*Ptr)[1].displayTimeStart + " - " + (*Ptr)[1].displayTimeEnd;
             textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 50);
-            textColor.DrawText(timesStr, 10, (100 + 250), 40);
+            textColor.DrawText(timesStr, 10, (200 + 250), 40);
         }
 
         if((*Ptr).size() > 2){
             timesStr = (*Ptr)[2].displayTimeStart + " - " + (*Ptr)[2].displayTimeEnd;
             textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 50);
-            textColor.DrawText(timesStr, 10, (100 + 500), 40);
+            textColor.DrawText(timesStr, 10, (200 + 500), 40);
         }
 
         if((*Ptr).size() > 3){
             timesStr = (*Ptr)[3].displayTimeStart + " - " + (*Ptr)[3].displayTimeEnd;
             textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 50);
-            textColor.DrawText(timesStr, 10, (100 + 750), 40);
+            textColor.DrawText(timesStr, 10, (200 + 750), 40);
         }
+    }
+
+    void weekNumberbufferToInt(){
+        string s(weekNumberbuffer);
+        weekNumber = stoi(s);
     }
 
     //Variables
@@ -161,4 +167,6 @@ public:
     time_t rawtime;
     struct tm * timeinfo;
     char buffer [80];
+    char weekNumberbuffer [80];
+    int weekNumber = 0;
 };

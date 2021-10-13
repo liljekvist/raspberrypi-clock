@@ -24,59 +24,91 @@ void LogCustom(int msgType, const char *text, va_list args);
 void soundLogic(shared_ptr<Sound> soundEffect, shared_ptr<deque<Event>> dayPtr, tm * timeinfo);
 std::string getImageUrlFromReddit();
 std::string getImageFromUrl(std::string url);
+void getCalendarFromSchoolsoft();
+deque<string> findRowOfTodaysFood(int week, int day);
 
 int main() {
+    //Creates a main object for use later.
     class main mainObject;
+
     // Initialization
-    int screenWidth = 1920;
-    int screenHeight = 1080;
+    int screenWidth = 2560;
+    int screenHeight = 1440;
+    Rectangle container = { 25.0f, 25.0f, screenWidth - 50.0f, screenHeight - 250.0f };
     SetTraceLogCallback(LogCustom);
     SetTargetFPS(60);
     
+    //Init Raylib objects
     raylib::Color whiteColor(LIGHTGRAY);
     raylib::Color blackColor(BLACK);
     raylib::Window w(screenWidth, screenHeight, "PogClock");
     
+    //Gets todays day as string
     string currentDay = mainObject.getCurrentDayString();
-    
+
+    //Audio intis and sound loading
     //InitAudioDevice(); 
     (*mainObject.effectPtr) = LoadSound("sound/siren.wav");
+
+    //Construct a vector to use for getting todays events
     mainObject.constructDayVector();
+
+    //Get image from r/ProgrammerHumor and Scale the image to the correct size
     auto filename = getImageFromUrl(getImageUrlFromReddit());
     raylib::Texture texture(filename);
     mainObject.ResizeImage(&texture, 500, 500);
 
+    //Get and Process todays food
+    strftime (mainObject.weekNumberbuffer,80,"%V",mainObject.timeinfo);
+    mainObject.weekNumberbufferToInt();
+    getCalendarFromSchoolsoft();
+    deque<string> lunchStrings = findRowOfTodaysFood(mainObject.weekNumber, mainObject.getCurrentDayInt());
+    for(int i = 0; i < lunchStrings.size(); i++){
+        std::string delim = "\\n";
+        lunchStrings[i].erase(0, lunchStrings[i].find(delim) + delim.length());
+    }
+
     while (!w.ShouldClose()) // Detect window close button or ESC key
     {
+
+        //Forcing the application to run in fullscreen
         if (IsCursorOnScreen()){
             DisableCursor();
             HideCursor();
         }
         if (!IsWindowFullscreen())
         {
-             // if we are not in fullscreen set fullscreen
+            // if we are not in fullscreen set fullscreen
             ToggleFullscreen();
         }
 
+        //Sound logic function for when sound should be played.
         soundLogic(mainObject.effectPtr, mainObject.Ptr, mainObject.timeinfo);
 
+        //Gets time string to print it later
         time (&mainObject.rawtime);
         mainObject.timeinfo = localtime (&mainObject.rawtime);
         strftime (mainObject.buffer,80,"%T",mainObject.timeinfo);
+
+
         // Draw
         BeginDrawing();
             //Clear background
             blackColor.ClearBackground();
             //Draw events
             mainObject.drawEventText();
-            DrawTexture(texture, screenWidth - texture.width, screenHeight - texture.height, WHITE);
+            DrawTexture(texture, 1300 - texture.width, screenHeight - texture.height, WHITE);
             //Draw clock and borderline
-            whiteColor.DrawText(mainObject.buffer, 1030, 0, 200);
-            whiteColor.DrawText(currentDay, 1030, 250, 100);
-            whiteColor.DrawLine(1000,0,1001,1080);
+            whiteColor.DrawText(mainObject.buffer, 1320, 0, 200);
+            whiteColor.DrawText(currentDay, 1320, 250, 80);
+            whiteColor.DrawLine(1300,0,1301,1440);
+
+            //Draws todays food
+            whiteColor.DrawText("Lunch: " + lunchStrings[0], 1320, 350, 40);
+            whiteColor.DrawText("Veg Lunch: " + lunchStrings[1], 1320, 450, 40);
             
             //Draw "Made by" text
-            whiteColor.DrawText("Made with <3 by liljekvist", 10, 20 + 1000, 40);
+            whiteColor.DrawText("Made with <3 by liljekvist", 10, screenHeight - 40, 40);
         EndDrawing();
     }
     UnloadTexture(texture);
@@ -169,3 +201,68 @@ std::string getImageFromUrl(std::string url){
         fclose(fp);
         return filename;
     }
+
+void getCalendarFromSchoolsoft(){
+        //Get Calendar from schoolsoft as requested by kasper.
+        //It also saves it locally to help debugging.
+        const std::string url("https://sms.schoolsoft.se/nti/jsp/public/right_public_student_ical.jsp?key=f9b774bfb49adf25605253580b3150c0");
+        CURL* curl = curl_easy_init();
+        FILE *fp;
+        CURLcode res;
+        std::string filename = "calendar";
+        char outfilename[filename.length() + 1];
+        strcpy(outfilename, filename.c_str());
+        fp = fopen(outfilename,"wb");
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+        curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+        fclose(fp);
+    }
+
+deque<string> findRowOfTodaysFood(int week, int day) {
+    string substring = "lunchmenu-" + to_string(week) + "-" + to_string(day - 1); // minus 1 due to it having a sundat to saturday week format
+    cout << "substring: " << substring << endl;
+
+    ifstream calendarString("calendar", std::ifstream::in);
+    string x;
+    bool ans = false;
+    int line = 1;
+    deque<string> stringArr;
+    string rowCache, rowCache2;
+
+    if (calendarString.is_open()) //is_open open the text file.
+    {
+
+        while (std::getline(calendarString, x)) {
+            if (x.find(substring, 0) != string::npos) {
+
+                    if(rowCache[0] == ' '){
+                        printf("old cache1: %s \n", rowCache.c_str());
+                        printf("old cache2: %s \n", rowCache2.c_str());
+                        rowCache = rowCache.c_str() + rowCache2;
+                        printf("new cache: %s \n", rowCache.c_str());
+                    }
+
+                    printf("Substring found at row: %i \n", line);
+                    stringArr.push_back(rowCache);
+                    ans = true;
+            }
+            rowCache2 = rowCache;
+            rowCache = x;
+            line++;
+        }
+        calendarString.close(); //to close text file.
+    } 
+    else
+        cout << "Unable to open file";
+
+    if (!ans) // if subtring not present.
+        cout << "subtring not present is present" << endl;
+
+    return stringArr;
+}
