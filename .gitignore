@@ -2,3 +2,8 @@ include
 lib
 bin
 .idea
+*.jpg
+*.png
+*.gif
+calendar
+formattedcalendar

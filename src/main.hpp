@@ -125,31 +125,31 @@ public:
         if((*Ptr).size() > 0){
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
             if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
-                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 50);
-                textColorRed.DrawText(timesStr, 10, 200, 40);
+                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 80);
+                textColorRed.DrawText(timesStr, 10, 180, 60);
             }
             else {
-                textColor.DrawText((*Ptr)[0].title, 10 , 10, 50);
-                textColor.DrawText(timesStr, 10, 200, 40);
+                textColor.DrawText((*Ptr)[0].title, 10 , 10, 80);
+                textColor.DrawText(timesStr, 10, 180, 60);
             }
         }
 
         if((*Ptr).size() > 1){   
             timesStr = (*Ptr)[1].displayTimeStart + " - " + (*Ptr)[1].displayTimeEnd;
-            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 50);
-            textColor.DrawText(timesStr, 10, (200 + 250), 40);
+            textColor.DrawText((*Ptr)[1].title, 10, (10 + 250), 80);
+            textColor.DrawText(timesStr, 10, (180 + 250), 60);
         }
 
         if((*Ptr).size() > 2){
             timesStr = (*Ptr)[2].displayTimeStart + " - " + (*Ptr)[2].displayTimeEnd;
-            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 50);
-            textColor.DrawText(timesStr, 10, (200 + 500), 40);
+            textColor.DrawText((*Ptr)[2].title, 10, (10 + 500), 80);
+            textColor.DrawText(timesStr, 10, (180 + 500), 60);
         }
 
         if((*Ptr).size() > 3){
             timesStr = (*Ptr)[3].displayTimeStart + " - " + (*Ptr)[3].displayTimeEnd;
-            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 50);
-            textColor.DrawText(timesStr, 10, (200 + 750), 40);
+            textColor.DrawText((*Ptr)[3].title, 10, (10 + 750), 80);
+            textColor.DrawText(timesStr, 10, (180 + 750), 60);
         }
     }
 
