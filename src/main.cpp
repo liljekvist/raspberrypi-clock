@@ -47,7 +47,7 @@ int main() {
     string currentDay = mainObject.getCurrentDayString();
 
     //Audio intis and sound loading
-    InitAudioDevice(); 
+    //InitAudioDevice(); 
     (*mainObject.effectPtr) = LoadSound("sound/siren.wav");
 
     //Construct a vector to use for getting todays events

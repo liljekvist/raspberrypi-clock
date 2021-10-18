@@ -83,18 +83,16 @@ public:
         int weekday = getCurrentDayInt();
         if(weekday < 5 && weekday > 0){
             Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Standup Christoffer och Mikael", 9, 9, 40, 45, "9:40", "9:45"));
-            Ptr->push_back(Event("Standup Sebastian och Albin2", 9, 9, 45, 50, "9:45", "9:50"));
-            Ptr->push_back(Event("Standup Jonatan och Razan", 9, 9, 50, 55, "9:50", "9:55"));
-            Ptr->push_back(Event("Standup Viktor och Pontus", 9, 10, 55, 00, "9:55", "10:00"));
-            Ptr->push_back(Event("Standup Albin3 och Joel", 10, 10, 00, 05, "10:00", "10:05"));
+            Ptr->push_back(Event("Standup Albin3 och Joel", 9, 9, 50, 55, "9:50", "9:55"));
+            Ptr->push_back(Event("Standup Chritoffer och Mikael", 9, 10, 55, 00, "9:55", "10:00"));
+            Ptr->push_back(Event("Standup Caféteria", 10, 10, 00, 05, "10:00", "10:05"));
             Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
             Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
             Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
         }
         else if (weekday == 5){
             Ptr->push_back(Event("Dag börjar", 9, 9, 00, 00, "9:00", "9:00"));
-            Ptr->push_back(Event("Lunch på resturang", 12, 13, 00, 00, "12:00", "13:00"));
+            Ptr->push_back(Event("Lunch", 12, 13, 00, 00, "12:00", "13:00"));
             Ptr->push_back(Event("1337 fika", 13, 13, 37, 50, "13:37", "13:50"));
             Ptr->push_back(Event("Dag slut", 16, 16, 00, 00, "16:00", "16:00"));
         }
@@ -125,8 +123,8 @@ public:
         if((*Ptr).size() > 0){
             timesStr = (*Ptr)[0].displayTimeStart + " - " + (*Ptr)[0].displayTimeEnd;
             if((*Ptr)[0].startMinute <= timeinfo->tm_min && ((*Ptr)[0].startHour <= timeinfo->tm_hour) || (*Ptr)[0].startHour < timeinfo->tm_hour){
-                textColorRed.DrawText((*Ptr)[0].title, 10 , 10, 80);
-                textColorRed.DrawText(timesStr, 10, 180, 60);
+                textColorBlue.DrawText((*Ptr)[0].title, 10 , 10, 80);
+                textColorBlue.DrawText(timesStr, 10, 180, 60);
             }
             else {
                 textColor.DrawText((*Ptr)[0].title, 10 , 10, 80);
@@ -163,7 +161,7 @@ public:
     shared_ptr<deque<Event>> Ptr = make_shared<deque<Event>>();
     shared_ptr<Sound> effectPtr = make_shared<Sound>();
     raylib::Color textColor = raylib::Color(LIGHTGRAY);
-    raylib::Color textColorRed = raylib::Color(RED);
+    raylib::Color textColorBlue = raylib::Color(BLUE);
     time_t rawtime;
     struct tm * timeinfo;
     char buffer [80];
