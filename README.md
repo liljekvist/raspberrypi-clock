@@ -21,5 +21,5 @@ GNU/Linux and MacOS is supported. Tested on `Arch 2021.11.01` and `macOS 11.6 20
 * Curl, Used by libcurl
 * libjsoncpp
 
-##License
+## License
 This project is licenced under an unmodified zlib/libpng licence, which is an OSI-certified, BSD-like licence that allows static linking with closed source software. Check docs/LICENCE for further details.
